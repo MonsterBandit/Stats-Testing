@@ -1,0 +1,38 @@
+##
+## Formula 1 Drivers Standings
+##
+- platform: rest
+  scan_interval: 36000
+  name: f1_driver_standings_ergast
+  unique_id: sensor.f1_driver_standings_ergast
+  resource: https://api.jolpi.ca/ergast/f1/current/driverstandings.json
+  value_template: "{{ now() }}"
+  json_attributes_path: "$.MRData.StandingsTable.StandingsLists[0]"
+  json_attributes:
+    - DriverStandings
+      
+##
+## Formula 1 Constructors Standings
+##
+- platform: rest
+  scan_interval: 36000
+  name: f1_constructor_standings
+  unique_id: sensor.f1_constructor_standings
+  resource: https://api.jolpi.ca/ergast/f1/current/constructorstandings.json
+  value_template: "{{ now() }}"
+  json_attributes_path: "$.MRData.StandingsTable.StandingsLists[0]"
+  json_attributes: 
+    - ConstructorStandings
+  
+##
+## Formula 1 Schedule
+##
+- platform: rest
+  scan_interval: 36000
+  name: f1_races_ergast
+  unique_id: sensor.f1_races_ergast
+  resource: https://api.jolpi.ca/ergast/f1/current/races.json
+  value_template: "{{ now() }}"
+  json_attributes_path: "$.MRData.RaceTable"
+  json_attributes:
+    - Races
