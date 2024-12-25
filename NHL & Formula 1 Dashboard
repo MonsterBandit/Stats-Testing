@@ -63,7 +63,8 @@ decluttering_templates:
       css:
         table+: 'padding: 0px; width: 100%; border-collapse: collapse; margin-top:12px;'
         tbody tr td:first-child: 'width: 1%;'
-        tbody tr td:nth-child(2): 'width: 90%;'
+        tbody tr td:nth-child(2): 'width: 10%;'
+        tbody tr td:nth-child(3+): 'width: 5%;'
         tbody tr:hover: 'background-color: dimgrey!important; color:white!important;'
       card_mod:
         style:
@@ -80,18 +81,44 @@ decluttering_templates:
                font-weight: bold!important;
              }
       sort_by:
-        - entries+
+        - MRDatat+
       entities:
         include: '[[entity]]'
       columns:
         - name: Rank
-          data: entries
-          modify: x.stats.find(y=>y.name == 'rank').displayValue
-        - name: Team Name
-          data: entries
+          data: ConstructorStandings
+          modify: x.position
+        - name: Logo
+          data: ConstructorStandings
           modify: >-
-            '<div style="background-color:#' + x.team.color + ';padding:5px;">'
-            +  x.team.displayName + '</div>'
+            const constructorLogos = {
+              red_bull: "https://cdn.racingnews365.com/Teams/Red-Bull/_503xAUTO_crop_center-center_none/f1_2021_redbull_logo.png?v=1643808334",
+              mercedes: "https://cdn.racingnews365.com/Teams/Mercedes/_503xAUTO_crop_center-center_none/f1_2021_mercedes_logo.png?v=1643808334",
+              ferrari: "https://cdn.racingnews365.com/Teams/Ferrari/_503xAUTO_crop_center-center_none/f1_2021_ferrari_logo.png?v=1643808334",
+              mclaren: "https://cdn.racingnews365.com/Teams/McLaren/_503xAUTO_crop_center-center_none/f1_2021_mclaren_logo.png?v=1643808334",
+              alpine: "https://cdn.racingnews365.com/Teams/Alpine/_503xAUTO_crop_center-center_none/f1_2021_alpine_logo.png?v=1643808334",
+              aston_martin: "https://cdn.racingnews365.com/Teams/Aston-Martin/_503xAUTO_crop_center-center_none/f1_2021_astonmartin_logo.png?v=1643808334",
+              williams: "https://cdn.racingnews365.com/Teams/Williams/_503xAUTO_crop_center-center_none/f1_2021_williams_logo.png?v=1643808334",
+              alfa_romeo: "https://cdn.racingnews365.com/Teams/Alfa-Romeo/_503xAUTO_crop_center-center_none/f1_2021_alfaromeo_logo.png?v=1643808334",
+              haas: "https://cdn.racingnews365.com/Teams/Haas/_503xAUTO_crop_center-center_none/f1_2021_haas_logo.png?v=1643808334",
+              alphatauri: "https://cdn.racingnews365.com/Teams/AlphaTauri/_503xAUTO_crop_center-center_none/f1_2021_alphatauri_logo.png?v=1643808334",
+              sauber:  "https://cdn-6.motorsport.com/images/amp/0L17d5W2/s6/logo-stakef1team-rgb-pos-1.jpg",  
+              rb_f1_team: "https://cdn-8.motorsport.com/images/vmt/Dx6zJ6GR/s1/visa-cash-app-rb-logo-unveil-1.jpg",
+            }; '<div>' + (constructorLogos[x.Constructor.constructorId] ? '<img
+            src="' + constructorLogos[x.Constructor.constructorId] + '"
+            style="width:20px;height:20px;margin-right:5px;">' : '') + '</div>'
+        - name: Constructor
+          data: ConstructorStandings
+          modify: x.Constructor.name
+        - name: Nationality
+          data: ConstructorStandings
+          modify: x.Constructor.nationality
+        - name: Points
+          data: ConstructorStandings
+          modify: x.points
+        - name: Wins
+          data: ConstructorStandings
+          modify: x.wins
   f1_calendar:
     card:
       type: custom:flex-table-card
